@@ -1,17 +1,13 @@
 {
-  "outputDirectory": "dist",
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "routes": [
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "framework": null,
+  "outputDirectory": "dist/client",
+  "installCommand": "pnpm i",
+  "rewrites": [
     {
-      "src": "/assets/(.*)",
-      "headers": {
-        "Cache-Control": "public, max-age=31536000, immutable"
-      }
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/((?!assets/).*)",
+      "destination": "/api/index.ts"
     }
   ]
 }
