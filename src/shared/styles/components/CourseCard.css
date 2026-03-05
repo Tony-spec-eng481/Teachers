@@ -1,0 +1,121 @@
+.course-card-component {
+  background: rgba(31, 27, 27, 0.05);
+  /* backdrop-filter: blur(10px); */
+  border: 1px border rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.course-card-component:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.course-card-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+
+.course-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.course-card-component:hover .course-card-image {
+  transform: scale(1.1);
+}
+
+.course-card-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 10;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+.course-card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.course-card-title {
+  color: #100f0f;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.course-card-description {
+  color: rgba(19, 18, 18, 0.6);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.course-card-footer {
+  margin-top: auto;
+}
+
+.course-card-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  color: rgba(15, 14, 14, 0.5);
+  font-size: 0.85rem;
+}
+
+.course-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.course-card-btn {
+  width: 100%;
+  background: white;
+  color: #0f172a;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  display: block;
+}
+
+.course-card-btn:hover {
+  background: #3b82f6;
+  color: white;
+  transform: scale(1.02);
+}
+
+.course-card-btn:active {
+  transform: scale(0.98);
+}

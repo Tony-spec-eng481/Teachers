@@ -1,0 +1,265 @@
+/* Navbar.css */
+
+.dashboard-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  padding: 0 24px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+/* Left section */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navbar-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.navbar-menu-btn:hover {
+  background: rgba(59, 130, 246, 0.08);
+  color: #2563eb;
+  transform: scale(1.02);
+}
+
+.navbar-menu-btn:active {
+  transform: scale(0.98);
+}
+
+/* Search input (commented in your code but styled for future use) */
+.navbar-search {
+  position: relative;
+}
+
+.search-input {
+  width: 280px;
+  height: 42px;
+  padding: 0 16px 0 44px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  background: #ffffff;
+  font-size: 14px;
+  color: #1e293b;
+  transition: all 0.2s ease;
+}
+
+.search-input::placeholder {
+  color: #94a3b8;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  width: 320px;
+}
+
+/* Optional search icon if you want to add it */
+.navbar-search::before {
+  content: "🔍";
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+/* Right section */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Notification button (commented but styled) */
+.notification-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.notification-btn:hover {
+  background: rgba(59, 130, 246, 0.08);
+  color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.notification-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: #2563eb;
+  border: 2px solid #ffffff;
+  border-radius: 18px;
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+
+/* User profile */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 4px 4px 16px;
+  background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  border-radius: 40px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.user-profile:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12);
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+}
+
+.user-profile:active {
+  transform: translateY(0);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.3;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  letter-spacing: 0.01em;
+}
+
+.user-role {
+  font-size: 11px;
+  font-weight: 500;
+  color: #2563eb;
+  background: rgba(59, 130, 246, 0.1);
+  padding: 2px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.user-avatar {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.25);
+  transition: all 0.2s ease;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.user-profile:hover .user-avatar {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .dashboard-navbar {
+    padding: 0 16px;
+  }
+
+  .search-input {
+    width: 200px;
+  }
+
+  .search-input:focus {
+    width: 240px;
+  }
+
+  .user-info {
+    display: none;
+  }
+
+  .user-profile {
+    padding: 4px;
+  }
+
+  .user-avatar {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-search {
+    display: none;
+  }
+
+  .navbar-menu-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .notification-btn {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Optional: Add a subtle animation for the navbar when scrolling */
+.dashboard-navbar.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1);
+}
+
+/* Optional: Add a nice divider between sections */
+.navbar-right::before {
+  content: '';
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.2), transparent);
+  margin-right: 8px;
+}

@@ -1,0 +1,761 @@
+/* @elearning/shared/styles/auth/form.css */
+
+/* CSS Variables for theme support */
+:root {
+  /* Light theme (default) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+  --border-focus: #6366f1;
+  --input-bg: #ffffff;
+  --input-text: #1f2937;
+  --input-placeholder: #9ca3af;
+  --button-bg: #4f46e5;
+  --button-hover: #4338ca;
+  --button-text: #ffffff;
+  --checkbox-accent: #4f46e5;
+  --error-bg: #fee2e2;
+  --error-text: #b91c1c;
+  --success-bg: #d1fae5;
+  --success-text: #065f46;
+  --spinner-border: #ffffff;
+  --icon-color: #6b7280;
+  --icon-hover: #4b5563;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --bg-primary: #1f2937;
+  --bg-secondary: #111827;
+  --text-primary: #f9fafb;
+  --text-secondary: #e5e7eb;
+  --text-muted: #9ca3af;
+  --border-color: #374151;
+  --border-focus: #818cf8;
+  --input-bg: #374151;
+  --input-text: #f9fafb;
+  --input-placeholder: #9ca3af;
+  --button-bg: #6366f1;
+  --button-hover: #4f46e5;
+  --button-text: #ffffff;
+  --checkbox-accent: #818cf8;
+  --error-bg: #7f1d1d;
+  --error-text: #fecaca;
+  --success-bg: #064e3b;
+  --success-text: #d1fae5;
+  --spinner-border: #ffffff;
+  --icon-color: #9ca3af;
+  --icon-hover: #e5e7eb;
+  --shadow-sm: 0 1px 2px 0 rgba(255, 255, 255, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(255, 255, 255, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(255, 255, 255, 0.1);
+}
+
+/* Base styles */
+.auth-form {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: var(--bg-primary);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Form group styles */
+.form-group-custom {
+  position: relative;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+/* Input field styles */
+.auth-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: var(--input-text);
+  background-color: var(--input-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 0.75rem;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+}
+
+.auth-input:hover {
+  border-color: var(--text-muted);
+}
+
+.auth-input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.auth-input::placeholder {
+  color: var(--input-placeholder);
+  opacity: 0.8;
+}
+
+/* Password field specific styles */
+.password-field {
+  position: relative;
+}
+
+/* Add padding to the right to make space for the icon */
+.password-field .auth-input {
+  padding-right: 3rem;
+}
+
+/* Password toggle button - FIXED POSITIONING */
+.password-toggle {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--icon-color);
+  transition: all 0.2s ease;
+  z-index: 2;
+  border-radius: 0.5rem;
+  line-height: 1;
+}
+
+.password-toggle:hover {
+  color: var(--icon-hover);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .password-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.password-toggle:focus {
+  outline: none;
+  color: var(--border-focus);
+}
+
+.password-toggle:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* Ensure the icon stays within the input */
+.password-toggle svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: block;
+  pointer-events: none; /* Prevents the SVG from blocking button clicks */
+}
+
+/* Checkbox group styles */
+.auth-checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.auth-checkbox {
+  width: 1.125rem;
+  height: 1.125rem;
+  accent-color: var(--checkbox-accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Submit button styles */
+.auth-submit-btn {
+  width: 100%;
+  padding: 0.875rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--button-text);
+  background-color: var(--button-bg);
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: var(--shadow-sm);
+}
+
+.auth-submit-btn:hover:not(:disabled) {
+  background-color: var(--button-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.auth-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Loading state styles */
+.loading-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+/* Spinner animation */
+.spinner {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--spinner-border);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error and success message styles */
+.auth-error {
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  background-color: var(--error-bg);
+  color: var(--error-text);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.auth-success {
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  background-color: var(--success-bg);
+  color: var(--success-text);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Link styles */
+.auth-link {
+  color: var(--border-focus);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .auth-form {
+    max-width: 90%;
+    padding: 1.5rem;
+    margin: 1rem auto;
+  }
+
+  .auth-input {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.95rem;
+  }
+
+  .password-field .auth-input {
+    padding-right: 2.75rem;
+  }
+
+  .password-toggle {
+    right: 0.5rem;
+    padding: 0.4rem;
+  }
+
+  .password-toggle svg {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .auth-checkbox-group {
+    font-size: 0.875rem;
+    flex-wrap: wrap;
+  }
+
+  .auth-submit-btn {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .auth-form {
+    max-width: 100%;
+    padding: 1.25rem;
+    margin: 0.5rem;
+    border-radius: 0.75rem;
+  }
+
+  .form-group-custom {
+    margin-bottom: 1.25rem;
+  }
+
+  .auth-input {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.9rem;
+  }
+
+  .password-field .auth-input {
+    padding-right: 2.5rem;
+  }
+
+  .password-toggle {
+    right: 0.375rem;
+    padding: 0.35rem;
+  }
+
+  .password-toggle svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .auth-checkbox-group {
+    margin: 1.25rem 0;
+    font-size: 0.85rem;
+  }
+}
+
+/* Small height devices */
+@media screen and (max-height: 700px) {
+  .auth-form {
+    padding: 1.25rem;
+  }
+
+  .form-group-custom {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Landscape mode on mobile */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .auth-form {
+    padding: 1rem;
+    margin: 0.5rem auto;
+  }
+
+  .form-group-custom {
+    margin-bottom: 0.75rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .auth-input {
+    border-width: 2px;
+    border-color: var(--text-primary);
+  }
+
+  .auth-submit-btn {
+    border: 2px solid var(--text-primary);
+  }
+
+  .password-toggle {
+    border: 1px solid transparent;
+  }
+
+  .password-toggle:hover {
+    border-color: var(--text-primary);
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .auth-input,
+  .auth-submit-btn,
+  .password-toggle,
+  .spinner {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .auth-form {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .password-toggle {
+    display: none;
+  }
+}
+/* Add to your form.css file */
+
+/* Auth options container (remember me + forgot password) */
+.auth-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0 1.5rem 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Forgot password link */
+.auth-forgot-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  opacity: 0.9;
+  transition: all 0.2s ease;
+}
+
+.auth-forgot-link:hover {
+  color: var(--border-focus);
+  text-decoration: underline;
+  opacity: 1;
+}
+
+/* Dark theme support for forgot link */
+[data-theme="dark"] .auth-forgot-link {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .auth-forgot-link:hover {
+  color: var(--border-focus);
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 480px) {
+  .auth-options {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+}
+/* Add to your form.css file */
+
+/* Select dropdown styles */
+.auth-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: var(--input-text);
+  background-color: var(--input-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 0.75rem;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.2rem;
+}
+
+.auth-select:hover {
+  border-color: var(--text-muted);
+}
+
+.auth-select:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Style for the placeholder option */
+.auth-select option:first-of-type {
+  color: var(--input-placeholder);
+}
+
+/* Style for all other options */
+.auth-select option {
+  color: var(--input-text);
+  background-color: var(--input-bg);
+  padding: 0.5rem;
+}
+
+/* Dark theme specific select styles */
+[data-theme="dark"] .auth-select {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+}
+
+[data-theme="dark"] .auth-select option {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+}
+
+/* Responsive styles for select */
+@media screen and (max-width: 768px) {
+  .auth-select {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.95rem;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .auth-select {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .auth-select {
+    border-width: 2px;
+    border-color: var(--text-primary);
+  }
+}
+
+
+/* Add to your form.css file */
+
+/* Scrollable form styles */
+.auth-form-scrollable {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--bg-secondary);
+}
+
+/* Custom scrollbar for webkit browsers */
+.auth-form-scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+
+.auth-form-scrollable::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 3px;
+}
+
+.auth-form-scrollable::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.auth-form-scrollable::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* File input styles (uncomment when needed) */
+.file-input-group {
+  margin-bottom: 1.5rem;
+}
+
+.file-input-label {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.file-input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--input-text);
+  background-color: var(--input-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 0.75rem;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.file-input:hover {
+  border-color: var(--text-muted);
+}
+
+.file-input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.file-input::file-selector-button {
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.file-input::file-selector-button:hover {
+  background-color: var(--button-hover);
+}
+
+/* Margin utility classes */
+.auth-checkbox-margin {
+  margin-top: 1rem;
+}
+
+.auth-submit-margin {
+  margin-top: 1rem;
+}
+
+/* Responsive adjustments for scrollable form */
+@media screen and (max-width: 768px) {
+  .auth-form-scrollable {
+    max-height: 70vh;
+    padding-right: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .auth-form-scrollable {
+    max-height: 60vh;
+    padding-right: 0.5rem;
+  }
+  
+  .file-input::file-selector-button {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Dark theme support for file input */
+[data-theme="dark"] .file-input {
+  color-scheme: dark;
+}
+
+[data-theme="dark"] .file-input::file-selector-button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+}
+
+/* Forgot & Reset Password Specific Styles */
+.auth-mode-heading {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-mode-heading h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 1px;
+}
+
+.auth-form-description {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.input-with-icon {
+  position: relative;
+  width: 100%;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--icon-color);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.auth-input-with-icon {
+  padding-left: 2.75rem;
+}
+
+.auth-back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.875rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.auth-back-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+.auth-success-state,
+.auth-error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.auth-success-icon {
+  color: var(--success-bg);
+  background: var(--success-text);
+  border-radius: 50%;
+  padding: 4px;
+  margin-bottom: 1rem;
+}
+
+.auth-error-icon {
+  color: var(--error-bg);
+  background: var(--error-text);
+  border-radius: 50%;
+  padding: 4px;
+  margin-bottom: 1rem;
+}
+
+.auth-success-title,
+.auth-error-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+
+.auth-success-message,
+.auth-error-message {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.auth-success-message strong {
+  color: var(--text-primary);
+}
