@@ -93,7 +93,7 @@ const LiveClasses = () => {
     } catch (err: any) {
       toast.error(err.response?.data?.error || "Failed to schedule class");
     } finally {
-      setSubmitting(false);
+      setSubmitting(false);   
     }
   };
 
@@ -110,7 +110,7 @@ const LiveClasses = () => {
   const openLiveClass = (url: string) => {
     window.open(
       `/dashboard/live-classes/room/${url}`,
-      // "_blank",
+      "_blank",
       "noopener,noreferrer",
     );
   };

@@ -46,7 +46,7 @@ import type {
 } from "agora-rtc-sdk-ng";
 import { axiosInstance } from "../../shared/index";
 import toast from "react-hot-toast";
-import "../styles/LiveClassRoom.css";
+import "../styles/AgoraClass.css"
 
 // ─── Types ───────────────────────────────────────────────────────────────
 interface RemoteUser {
