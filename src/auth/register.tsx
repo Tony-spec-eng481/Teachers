@@ -54,6 +54,20 @@ const TeacherRegister = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const nameRegex = /^[A-Za-z]+ [A-Za-z]+( [A-Za-z]+)*$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!nameRegex.test(formData.name.trim())) {
+      toast.error(
+        "Enter at least two names. Letters only (A-Z), no numbers or symbols.",
+      );
+      return;
+    }
+
+    if (!emailRegex.test(formData.email)) {
+      toast.error("Enter a valid email address");
+      return;
+    }
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -113,6 +127,8 @@ const TeacherRegister = () => {
             value={formData.name}
             onChange={handleChange}
             placeholder="Full Name"
+            pattern="[A-Za-z]+ [A-Za-z]+( [A-Za-z]+)*"
+            title="Enter at least two names using letters only"
             required
           />
         </div>
