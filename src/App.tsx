@@ -22,7 +22,7 @@ const Assignments = lazy(() => import('./pages/Dashboard/Assignments'));
 const Courses = lazy(() => import('./pages/Dashboard/Courses'));
 const CourseUnits = lazy(() => import('./pages/Dashboard/CourseUnits'));
 const Announcements = lazy(() => import('./pages/Dashboard/Announcements'));
-const AgoraClass = lazy(() => import('./pages/Dashboard/AgoraClass'));
+const ZoomClass = lazy(() => import('./pages/Dashboard/ZoomClass'));
 const Profile = lazy(() => import('./pages/Dashboard/Profile'));
 
 import SEO from './shared/components/SEO';
@@ -48,7 +48,7 @@ function App() {
               <Route path="content" element={<ContentManagement />} />
               <Route path="announcements" element={<Announcements />} />
               <Route path="live-classes" element={<LiveClasses />} />
-              <Route path="live-classes/room/:channelName" element={<AgoraClass />} />
+              <Route path="live-classes/room/:channelName" element={<ZoomClass />} />
               <Route path="assignments" element={<Assignments />} />
               <Route path="profile" element={<Profile />} />
             </Route>

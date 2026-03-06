@@ -1,0 +1,438 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   ZoomClass.css — Premium Dark Glassmorphism UI for Zoom Live Class
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─── Root Variables ──────────────────────────────────────────────────── */
+:root {
+  --zc-bg: #0f0f1a;
+  --zc-surface: rgba(255, 255, 255, 0.04);
+  --zc-surface-hover: rgba(255, 255, 255, 0.08);
+  --zc-glass: rgba(255, 255, 255, 0.06);
+  --zc-glass-border: rgba(255, 255, 255, 0.1);
+  --zc-text: #e8e8f0;
+  --zc-text-muted: #8888a0;
+  --zc-accent: #2D8CFF;
+  --zc-accent-glow: rgba(45, 140, 255, 0.3);
+  --zc-danger: #ff6b6b;
+  --zc-success: #51cf66;
+  --zc-warning: #ffd43b;
+  --zc-radius: 12px;
+  --zc-radius-sm: 8px;
+  --zc-transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Room Container ──────────────────────────────────────────────────── */
+.zc-room {
+  position: fixed;
+  inset: 0;
+  background: var(--zc-bg);
+  display: flex;
+  flex-direction: column;
+  color: var(--zc-text);
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+/* ─── Loading State ───────────────────────────────────────────────────── */
+.zc-loading {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: var(--zc-bg);
+  color: var(--zc-accent);
+  font-size: 1rem;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+.zc-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(45, 140, 255, 0.2);
+  border-top-color: var(--zc-accent);
+  border-radius: 50%;
+  animation: zc-spin 0.8s linear infinite;
+}
+
+@keyframes zc-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Top Bar ─────────────────────────────────────────────────────────── */
+.zc-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: var(--zc-surface);
+  border-bottom: 1px solid var(--zc-glass-border);
+  min-height: 56px;
+  gap: 16px;
+  z-index: 10;
+}
+
+.zc-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.zc-topbar-title {
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.zc-topbar-badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.zc-badge-live {
+  background: rgba(255, 107, 107, 0.2);
+  color: var(--zc-danger);
+  animation: zc-pulse 2s infinite;
+}
+
+.zc-badge-scheduled {
+  background: rgba(45, 140, 255, 0.2);
+  color: var(--zc-accent);
+}
+
+.zc-badge-ended {
+  background: rgba(136, 136, 160, 0.2);
+  color: var(--zc-text-muted);
+}
+
+.zc-badge-student {
+  background: rgba(81, 207, 102, 0.2);
+  color: var(--zc-success);
+}
+
+@keyframes zc-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.zc-topbar-center {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--zc-text-muted);
+  font-size: 0.85rem;
+}
+
+.zc-session-timer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: var(--zc-glass);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--zc-text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
+}
+
+.zc-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.zc-nav-btn {
+  padding: 6px 14px;
+  background: var(--zc-glass);
+  border: 1px solid var(--zc-glass-border);
+  border-radius: 20px;
+  color: var(--zc-text-muted);
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: var(--zc-transition);
+}
+
+.zc-nav-btn:hover {
+  background: var(--zc-surface-hover);
+  color: var(--zc-text);
+  border-color: var(--zc-accent);
+}
+
+/* ─── Content Area ────────────────────────────────────────────────────── */
+.zc-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+/* ─── Meeting Card ────────────────────────────────────────────────────── */
+.zc-meeting-card {
+  background: var(--zc-surface);
+  border: 1px solid var(--zc-glass-border);
+  border-radius: 24px;
+  padding: 48px;
+  max-width: 540px;
+  width: 100%;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  animation: zc-fadeUp 0.4s ease-out;
+}
+
+@keyframes zc-fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.zc-zoom-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.zc-zoom-icon svg {
+  filter: drop-shadow(0 4px 20px rgba(45, 140, 255, 0.3));
+}
+
+.zc-meeting-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: var(--zc-text);
+}
+
+/* ─── Meeting Details ─────────────────────────────────────────────────── */
+.zc-meeting-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.zc-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--zc-glass);
+  border-radius: var(--zc-radius-sm);
+  font-size: 0.9rem;
+  color: var(--zc-text);
+}
+
+.zc-detail-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* ─── Role Badge ──────────────────────────────────────────────────────── */
+.zc-meeting-role {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.zc-role-badge {
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.zc-role-badge.teacher {
+  background: rgba(45, 140, 255, 0.15);
+  color: var(--zc-accent);
+  border: 1px solid rgba(45, 140, 255, 0.3);
+}
+
+.zc-role-badge.student {
+  background: rgba(81, 207, 102, 0.15);
+  color: var(--zc-success);
+  border: 1px solid rgba(81, 207, 102, 0.3);
+}
+
+.zc-role-name {
+  font-size: 0.85rem;
+  color: var(--zc-text-muted);
+}
+
+/* ─── Action Buttons ──────────────────────────────────────────────────── */
+.zc-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.zc-start-btn,
+.zc-join-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--zc-accent);
+  border: none;
+  border-radius: var(--zc-radius);
+  color: white;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--zc-transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  letter-spacing: 0.3px;
+}
+
+.zc-start-btn:hover,
+.zc-join-btn:hover {
+  background: #1a7aef;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--zc-accent-glow);
+}
+
+.zc-join-btn.scheduled {
+  background: transparent;
+  border: 1px solid var(--zc-accent);
+  color: var(--zc-accent);
+}
+
+.zc-join-btn.scheduled:hover {
+  background: rgba(45, 140, 255, 0.1);
+}
+
+.zc-end-btn {
+  width: 100%;
+  padding: 14px;
+  background: transparent;
+  border: 1px solid var(--zc-danger);
+  border-radius: var(--zc-radius);
+  color: var(--zc-danger);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--zc-transition);
+}
+
+.zc-end-btn:hover {
+  background: rgba(255, 107, 107, 0.1);
+}
+
+.zc-back-btn {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid var(--zc-glass-border);
+  border-radius: var(--zc-radius-sm);
+  color: var(--zc-text-muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--zc-transition);
+}
+
+.zc-back-btn:hover {
+  background: var(--zc-surface-hover);
+  color: var(--zc-text);
+  border-color: var(--zc-accent);
+}
+
+/* ─── Scheduled / Ended Messages ──────────────────────────────────────── */
+.zc-scheduled-message,
+.zc-ended-message {
+  text-align: center;
+}
+
+.zc-waiting-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.zc-scheduled-message p,
+.zc-ended-message p {
+  color: var(--zc-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.zc-subtext {
+  font-size: 0.8rem !important;
+  color: var(--zc-text-muted) !important;
+  margin-bottom: 16px !important;
+}
+
+/* ─── Tips Section ────────────────────────────────────────────────────── */
+.zc-tips {
+  text-align: left;
+  padding: 20px;
+  background: var(--zc-glass);
+  border-radius: var(--zc-radius);
+  border: 1px solid var(--zc-glass-border);
+}
+
+.zc-tips h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--zc-text);
+  margin-bottom: 12px;
+}
+
+.zc-tips ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.zc-tips li {
+  font-size: 0.8rem;
+  color: var(--zc-text-muted);
+  padding-left: 16px;
+  position: relative;
+}
+
+.zc-tips li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--zc-accent);
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .zc-meeting-card {
+    padding: 24px 16px;
+    border-radius: 16px;
+  }
+
+  .zc-meeting-title {
+    font-size: 1.2rem;
+  }
+
+  .zc-topbar {
+    padding: 10px 14px;
+  }
+
+  .zc-topbar-title {
+    font-size: 0.85rem;
+  }
+}

@@ -107,9 +107,9 @@ const LiveClasses = () => {
       </div>
     );
 
-  const openLiveClass = (url: string) => {
+  const openLiveClass = (classId: string) => {
     window.open(
-      `/dashboard/live-classes/room/${url}`,
+      `/dashboard/live-classes/room/${classId}`,
       "_blank",
       "noopener,noreferrer",
     );
@@ -230,7 +230,7 @@ const LiveClasses = () => {
                       <div className="class-actions">
                         <button
                           className="btn-primary"
-                          onClick={() => openLiveClass(cls.live_url)}
+                          onClick={() => openLiveClass(cls.id)}
                         >
                           Join Class
                         </button>
