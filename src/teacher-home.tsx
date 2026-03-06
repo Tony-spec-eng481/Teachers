@@ -48,21 +48,6 @@ const TeacherHome = () => {
               Register as Teacher
             </Link>
           </div>
-
-          {/* <div className="teacher-stats">
-            <div className="stat-item">
-              <span className="stat-number">500+</span>
-              <span className="stat-label">Expert Teachers</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-number">10K+</span>
-              <span className="stat-label">Active Students</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-number">1000+</span>
-              <span className="stat-label">Courses</span>
-            </div>
-          </div> */}
         </div>
 
         <div className="teacher-hero-wave">
