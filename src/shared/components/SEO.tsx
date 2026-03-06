@@ -20,19 +20,20 @@ interface SEOProps {
 const SEO: React.FC<SEOProps> = ({
   title,
   description = "Official E-learning portal for our school system.",
-  keywords = "elearning, school, education, clubs, library, courses, online learning, student portal, university, university portal, trespics, trespics institute, trespics school, trespics university, tech, technology",
+  keywords = "elearning, school, education, clubs, library,institute, teacher, teachers, lecturer, lecturers,institutes in Kenya, institute in Kenya, courses, online learning, student portal, university, university portal, trespics, trespics institute, trespics school, trespics university, tech, technology",
   author = "Trespics Institute",
   canonical,
-  ogTitle,    
+  ogTitle,
   ogDescription,
   ogImage,
   ogUrl,
-  twitterCard = 'summary_large_image',
+  twitterCard = "summary_large_image",
   noindex = false,
-  children
+  children,
 }) => {
   const siteTitle = `${title} | Trespics Institute`;
-  const currentUrl = ogUrl || (typeof window !== 'undefined' ? window.location.href : '');
+  const currentUrl =
+    ogUrl || (typeof window !== "undefined" ? window.location.href : "");
 
   return (
     <Helmet>

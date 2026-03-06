@@ -14,6 +14,12 @@ const TeacherHome = () => {
           </Link>
           <div className="teacher-nav-links">
             <Link
+              to="https://library.trespicsinstitute.dev/"
+              className="teacher-nav-link"
+            >
+              <span className="nav-link-icon">Library</span>
+            </Link>
+            <Link
               to="https://www.trespicsinstitute.dev/"
               className="teacher-nav-link"
             >
