@@ -18,6 +18,7 @@ interface OverviewData {
   totalPrograms: number;
   upcomingClasses: any[];
   recentSubmissions: any[];
+  notifications: any[];
 }
 
 const Overview = () => {
@@ -29,7 +30,8 @@ const Overview = () => {
     const fetchOverview = async () => {
       try {
         const response = await axiosInstance.get("/lecturer/overview");
-        setData(response.data);
+        const notificationsRes = await axiosInstance.get("/student/notifications");
+        setData({ ...response.data, notifications: notificationsRes.data || [] });
         setError(null);
       } catch (err: any) {
         console.error("Failed to fetch overview", err);
@@ -165,6 +167,32 @@ const Overview = () => {
               <div className="empty-state">
                 <FileText className="empty-state-icon" />
                 <p>No recent submissions.</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="widget-card">
+          <div className="widget-header">
+            <AlertCircle className="widget-header-icon" />
+            <h3>Recent Notifications</h3>
+          </div>
+          <div className="widget-content">
+            {data?.notifications && data.notifications.length > 0 ? (
+              <ul className="notifications-list">
+                {data.notifications.slice(0, 5).map((n, idx) => (
+                  <li key={idx} className={`list-item ${n.is_read ? '' : 'unread'}`}>
+                    <div className="item-title">{n.message}</div>
+                    <div className="item-subtitle">
+                      {new Date(n.created_at).toLocaleString()}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="empty-state">
+                <AlertCircle className="empty-state-icon" />
+                <p>No recent notifications.</p>
               </div>
             )}
           </div>

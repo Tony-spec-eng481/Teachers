@@ -49,6 +49,7 @@ interface AssignmentDetail {
 const StudentManagement = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [selectedCourseId, setSelectedCourseId] = useState<string>("");
+  const [units, setUnits] = useState<Unit[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
   const [loading, setLoading] = useState(true);
   const [studentsLoading, setStudentsLoading] = useState(false);
@@ -63,6 +64,10 @@ const StudentManagement = () => {
   } | null>(null);
   const [markingScores, setMarkingScores] = useState<{ [key: string]: number }>({});
   const [markingLoading, setMarkingLoading] = useState<{ [key: string]: boolean }>({});
+  const [progressData, setProgressData] = useState<any[]>([]);
+  const [progressLoading, setProgressLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<'assignments' | 'progress'>('assignments');
+  const [progUnitId, setProgUnitId] = useState<string>("");
 
   useEffect(() => {
     const fetchUnits = async () => {
@@ -83,6 +88,7 @@ const StudentManagement = () => {
 
         const uniqueCourses = Array.from(courseMap.values());
         setCourses(uniqueCourses);
+        setUnits(response.data);
 
         if (uniqueCourses.length > 0) {
           setSelectedCourseId(uniqueCourses[0].id);
@@ -141,6 +147,41 @@ const StudentManagement = () => {
       setDetailsLoading(false);
     }
   };
+
+  const handleViewProgress = async (unitId: string) => {
+    setProgressLoading(true);
+    try {
+      const response = await axiosInstance.get(`/lecturer/units/${unitId}/student-progress`);
+      setProgressData(response.data);
+    } catch (err) {
+      console.error("Failed to fetch progress data:", err);
+    } finally {
+      setProgressLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === 'progress' && progUnitId) {
+      handleViewProgress(progUnitId);
+    }
+  }, [activeTab, progUnitId]);
+
+  useEffect(() => {
+    if (activeTab === 'progress' && !progUnitId && courses.length > 0) {
+      // Find first unit available to set as default for progress
+      const fetchFirstUnit = async () => {
+        try {
+          const res = await axiosInstance.get("/lecturer/units");
+          if (res.data.length > 0) {
+            setProgUnitId(res.data[0].id);
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      };
+      fetchFirstUnit();
+    }
+  }, [activeTab, courses]);
 
   const handleGrade = async (assignmentId: string, studentId: string) => {
     const score = markingScores[assignmentId];
@@ -338,104 +379,188 @@ const StudentManagement = () => {
             </div>
           </div>
 
-          <div className="assignments-section">
-            <h3>Assignments</h3>
-            
-            {detailsLoading ? (
-              <div className="loading-state">
-                <div className="loading-spinner"></div>
-                <span className="loading-text">Loading assignments...</span>
+          <div className="tabs-container">
+            <button 
+              className={`tab-btn ${activeTab === 'assignments' ? 'active' : ''}`}
+              onClick={() => setActiveTab('assignments')}
+            >
+              Assignments
+            </button>
+            <button 
+              className={`tab-btn ${activeTab === 'progress' ? 'active' : ''}`}
+              onClick={() => setActiveTab('progress')}
+            >
+              Topic Progress
+            </button>
+          </div>
+
+          <div className="tab-content">
+            {activeTab === 'assignments' ? (
+              <div className="assignments-section">
+                <h3>Assignments</h3>
+                
+                {detailsLoading ? (
+                  <div className="loading-state">
+                    <div className="loading-spinner"></div>
+                    <span className="loading-text">Loading assignments...</span>
+                  </div>
+                ) : (
+                  <>
+                    <div className="assignment-group">
+                      <h4>Submitted Assignments</h4>
+                      {assignmentData?.submitted.length === 0 ? (
+                        <p className="no-data">No assignments submitted yet.</p>
+                      ) : (
+                        <div className="assignment-list">
+                          {assignmentData?.submitted.map((a) => (
+                            <div key={a.id} className="assignment-item">
+                              <div className="assignment-info">
+                                <h5>{a.title}</h5>
+                                <p className="unit-name">{a.unit.title}</p>
+                                {a.submission?.file_url && (
+                                  <a href={a.submission.file_url} target="_blank" rel="noopener noreferrer" className="link-view">
+                                    View Attachment
+                                  </a>
+                                )}
+                                {a.submission?.answer_text && (
+                                  <div className="answer-text">
+                                    <strong>Submission:</strong>
+                                    <p>{a.submission.answer_text}</p>
+                                  </div>
+                                )}
+                              </div>
+                              <div className="grading-action">
+                                 <div className="grade-input-group">
+                                   <label>Award Marks (0-30)</label>
+                                   <input 
+                                     type="number" 
+                                     min="0" 
+                                     max="30"
+                                     value={markingScores[a.id] ?? ""}
+                                     onChange={(e) => setMarkingScores({...markingScores, [a.id]: parseInt(e.target.value)})}
+                                     placeholder="Score"
+                                   />
+                                 </div>
+                                 <button 
+                                   className="btn-grade"
+                                   disabled={markingLoading[a.id]}
+                                   onClick={() => handleGrade(a.id, selectedStudent.id)}
+                                 >
+                                   {markingLoading[a.id] ? "Saving..." : "Save Marks"}
+                                 </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="assignment-group">
+                      <h4>Failed to Submit</h4>
+                      {assignmentData?.failed.length === 0 ? (
+                        <p className="no-data">All assignments have a submission.</p>
+                      ) : (
+                        <div className="assignment-list">
+                          {assignmentData?.failed.map((a) => (
+                            <div key={a.id} className="assignment-item failed-item">
+                              <div className="assignment-info">
+                                <h5>{a.title}</h5>
+                                <p className="unit-name">{a.unit.title}</p>
+                                <span className="status-badge-failed">Not Submitted</span>
+                              </div>
+                              <div className="grading-action">
+                                 <div className="grade-input-group">
+                                   <label>Record Marks</label>
+                                   <input 
+                                     type="number" 
+                                     min="0" 
+                                     max="30"
+                                     value={markingScores[a.id] ?? ""}
+                                     onChange={(e) => setMarkingScores({...markingScores, [a.id]: parseInt(e.target.value)})}
+                                     placeholder="0"
+                                   />
+                                 </div>
+                                 <button 
+                                   className="btn-grade btn-failed-grade"
+                                   disabled={markingLoading[a.id]}
+                                   onClick={() => handleGrade(a.id, selectedStudent.id)}
+                                 >
+                                   {markingLoading[a.id] ? "Saving..." : "Record 0"}
+                                 </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )}
               </div>
             ) : (
-              <>
-                <div className="assignment-group">
-                  <h4>Submitted Assignments</h4>
-                  {assignmentData?.submitted.length === 0 ? (
-                    <p className="no-data">No assignments submitted yet.</p>
-                  ) : (
-                    <div className="assignment-list">
-                      {assignmentData?.submitted.map((a) => (
-                        <div key={a.id} className="assignment-item">
-                          <div className="assignment-info">
-                            <h5>{a.title}</h5>
-                            <p className="unit-name">{a.unit.title}</p>
-                            {a.submission?.file_url && (
-                              <a href={a.submission.file_url} target="_blank" rel="noopener noreferrer" className="link-view">
-                                View Attachment
-                              </a>
-                            )}
-                            {a.submission?.answer_text && (
-                              <div className="answer-text">
-                                <strong>Submission:</strong>
-                                <p>{a.submission.answer_text}</p>
-                              </div>
-                            )}
-                          </div>
-                          <div className="grading-action">
-                             <div className="grade-input-group">
-                               <label>Award Marks (0-30)</label>
-                               <input 
-                                 type="number" 
-                                 min="0" 
-                                 max="30"
-                                 value={markingScores[a.id] ?? ""}
-                                 onChange={(e) => setMarkingScores({...markingScores, [a.id]: parseInt(e.target.value)})}
-                                 placeholder="Score"
-                               />
-                             </div>
-                             <button 
-                               className="btn-grade"
-                               disabled={markingLoading[a.id]}
-                               onClick={() => handleGrade(a.id, selectedStudent.id)}
-                             >
-                               {markingLoading[a.id] ? "Saving..." : "Save Marks"}
-                             </button>
-                          </div>
-                        </div>
+              <div className="progress-section">
+                <div className="section-header">
+                  <h3>Topic Completion</h3>
+                  <div className="unit-selector-mini">
+                    <label>Select Unit:</label>
+                    <select 
+                      value={progUnitId} 
+                      onChange={(e) => setProgUnitId(e.target.value)}
+                      className="course-select"
+                    >
+                      <option value="">-- Select Unit --</option>
+                      {units.map((u: any) => (
+                        <option key={u.id} value={u.id}>{u.title}</option>
                       ))}
-                    </div>
-                  )}
+                    </select>
+                  </div>
                 </div>
 
-                <div className="assignment-group">
-                  <h4>Failed to Submit</h4>
-                  {assignmentData?.failed.length === 0 ? (
-                    <p className="no-data">All assignments have a submission.</p>
-                  ) : (
-                    <div className="assignment-list">
-                      {assignmentData?.failed.map((a) => (
-                        <div key={a.id} className="assignment-item failed-item">
-                          <div className="assignment-info">
-                            <h5>{a.title}</h5>
-                            <p className="unit-name">{a.unit.title}</p>
-                            <span className="status-badge-failed">Not Submitted</span>
-                          </div>
-                          <div className="grading-action">
-                             <div className="grade-input-group">
-                               <label>Record Marks</label>
-                               <input 
-                                 type="number" 
-                                 min="0" 
-                                 max="30"
-                                 value={markingScores[a.id] ?? ""}
-                                 onChange={(e) => setMarkingScores({...markingScores, [a.id]: parseInt(e.target.value)})}
-                                 placeholder="0"
-                               />
-                             </div>
-                             <button 
-                               className="btn-grade btn-failed-grade"
-                               disabled={markingLoading[a.id]}
-                               onClick={() => handleGrade(a.id, selectedStudent.id)}
-                             >
-                               {markingLoading[a.id] ? "Saving..." : "Record 0"}
-                             </button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </>
+                {progressLoading ? (
+                  <div className="loading-state">
+                    <div className="loading-spinner"></div>
+                    <span className="loading-text">Loading progress...</span>
+                  </div>
+                ) : progressData.length > 0 ? (
+                  <div className="table-container">
+                    <table className="students-table">
+                      <thead>
+                        <tr>
+                          <th>Student</th>
+                          <th>ID</th>
+                          <th>Completed Topics</th>
+                          <th>Assignments Completed</th>
+                          <th>Progress</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {progressData.map((p) => (
+                          <tr key={p.id}>
+                            <td>{p.name}</td>
+                            <td><span className="student-id">{p.student_id}</span></td>
+                            <td>{p.completedTopics} / {p.totalTopics}</td>
+                            <td>{p.completedAssignments} / {p.totalAssignments}</td>
+                            <td>
+                              <div className="progress-cell">
+                                <div className="progress-bar-container">
+                                  <div 
+                                    className="progress-bar-fill" 
+                                    style={{ width: `${p.progressPercentage}%` }}
+                                  ></div>
+                                </div>
+                                <span className="progress-percent">{p.progressPercentage}%</span>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="empty-state">
+                    <p>No enrollment data found for this unit.</p>
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </div>
